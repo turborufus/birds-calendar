@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { getShiftById } from '../services/api'
+import { getShiftById } from '../services/shiftService'
 
 export default {
   data() {

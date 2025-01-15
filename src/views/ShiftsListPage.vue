@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <!-- Индикатор загрузки, если данные еще не загружены -->
+    <v-progress-circular v-if="isLoading" indeterminate color="primary" />
+    
     <v-text-field
       v-model="searchQuery"
       label="Поиск"
@@ -9,8 +12,8 @@
     <v-row v-for="shift in filteredShifts" :key="shift.id" cols="12" md="4">
       <v-col>
         <v-card @click="goToShiftDetail(shift.id)"  class="pa-3">
-          <v-card-title>{{ shift.name }}</v-card-title>
-          <v-card-subtitle>{{ shift.description }}</v-card-subtitle>
+          <v-card-title>{{ shift.notes }} {{shift.date}}</v-card-title>
+          <v-card-subtitle>{{ shift.tyme_slot }}</v-card-subtitle>
         </v-card>
       </v-col>
     </v-row>
@@ -18,17 +21,18 @@
 </template>
 
 <script>
-import { getShifts } from "../services/api"
+import { getShifts } from "../services/shiftService"
 
 export default {
   data() {
     return {
       shifts: [],
+      isLoading: false,  // Состояние загрузки
       searchQuery: '',
     }
   },
   created() {
-    this.shifts = getShifts() // Получаем смены с помощью функции из api.js
+    this.fetchShifts()  // Вызываем метод для получения данных при создании компонента
   },
   computed: {
     filteredShifts() {
@@ -40,6 +44,17 @@ export default {
     }
   },
   methods: {
+    // Метод для получения смен
+    async fetchShifts() {
+      this.isLoading = true;  // Включаем индикатор загрузки
+      try {
+        this.shifts = await getShifts();  // Получаем данные из API
+      } catch (error) {
+        console.error('Ошибка при загрузке данных: ', error);
+      } finally {
+        this.isLoading = false;  // Выключаем индикатор загрузки
+      }
+    },
     goToShiftDetail(id) {
       this.$router.push({ name: 'ShiftDetailPage', params: { id } })
     }
