@@ -1,10 +1,24 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title>Календарь смен штаба птиц</v-toolbar-title>
+    </v-app-bar>
+
+    <!-- Навигация -->
+    <nav>
+      <router-link to="/">Список смен</router-link> |
+    </nav>
+
+    <!-- Отображение компонентов страниц -->
+    <router-view />
+  </v-app>
 </template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
 
 <style>
 #app {
