@@ -17,12 +17,22 @@ import { VApp,
     VCol,
     VRow,
     VCardText,
-    VProgressCircular} from 'vuetify/components'
+    VProgressCircular,
+    VTabs,
+    VTab,
+    VSpacer,
+    VAppBarTitle,
+    VMain,
+    VForm,
+    VCardActions,
+    VTextarea,
+    VDialog} from 'vuetify/components'
 
 // Создаем экземпляр Vuetify
 const vuetify = createVuetify({
     components: {
         VApp,
+        VMain,
         VContainer, 
         VRow,
         VCol,
@@ -36,6 +46,14 @@ const vuetify = createVuetify({
         VAppBar, 
         VCardText,
         VProgressCircular,
+        VTabs,
+        VTab,
+        VSpacer,
+        VAppBarTitle,
+        VForm,
+        VCardActions,
+        VTextarea,
+        VDialog,
     }
 })
 

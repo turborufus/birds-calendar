@@ -2,9 +2,14 @@
 
 import api from './api';
 
-export const getShifts = async () => {
+export const getShiftTypes = async () => {
   try {
-    const response = await api.get('shifts'); // Используем API для получения данных (в данном случае, список постов)
+    const response = await api.get('shifts/types', {
+      headers: {
+        'Authorization': 'Token b22b9cabbed38326c9a6a93e2f23372d29900b24',
+        'Content-Type': 'application/json',
+      }
+    });
     return response.data;
   } catch (error) {
     console.error('Ошибка при получении данных: ', error);
@@ -12,8 +17,34 @@ export const getShifts = async () => {
   }
 };
 
-export const getShiftById = (id) => {
-    // Здесь мы можем позже делать запрос к API
-    return { id, name: `Смена ${id}`, description: `Описание для смены ${id}` }
+export const getTimeSlots = async () => {
+  try {
+    const response = await api.get('timeslots', {
+      headers: {
+        'Authorization': 'Token b22b9cabbed38326c9a6a93e2f23372d29900b24',
+        'Content-Type': 'application/json',
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении данных: ', error);
+    throw error;  // Пробрасываем ошибку для дальнейшей обработки
   }
-  
+};
+
+export const getShifts = async () => {
+  try {
+    const response = await api.get('shifts', {
+      headers: {
+        'Authorization': 'Token b22b9cabbed38326c9a6a93e2f23372d29900b24',
+        'Content-Type': 'application/json',
+      }
+    }); // Используем API для получения данных (в данном случае, список постов)
+
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении данных: ', error);
+    throw error;  // Пробрасываем ошибку для дальнейшей обработки
+  }
+};
+

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ShiftsListPage from '../views/ShiftsListPage.vue'
-import ShiftDetailPage from '../views/ShiftDetailPage.vue'
+import ShiftSignUpPage from '../views/ShiftSignUpPage.vue'
 
 
 const routes = [
@@ -11,8 +11,8 @@ const routes = [
   },
   {
     path: '/shift/:id',
-    name: 'ShiftDetailPage',
-    component: ShiftDetailPage
+    name: 'ShiftSignUpPage',
+    component: ShiftSignUpPage
   }
 ]
 

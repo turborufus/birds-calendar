@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-toolbar-title>Календарь смен штаба птиц</v-toolbar-title>
+      <v-app-bar-title>Календарь смен штаба птиц
+      <!-- <v-spacer></v-spacer>-->
+      <!-- Навигация -->
+          <!-- <router-link to="/">Список смен</router-link> -->
+      </v-app-bar-title>  
     </v-app-bar>
-
-    <!-- Навигация -->
-    <nav>
-      <router-link to="/">Список смен</router-link> |
-    </nav>
+  
 
     <!-- Отображение компонентов страниц -->
     <router-view />
