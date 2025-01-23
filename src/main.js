@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import store from './store';
 import { createVuetify } from 'vuetify'
 import 'vuetify/styles'  // Добавляем глобальные стили Vuetify
 //import { VApp, VBtn, VToolbar, VToolbarTitle, VTextField, VCard, VAppBar } from 'vuetify/components'  // Явный импорт компонентов Vuetify
@@ -26,7 +27,13 @@ import { VApp,
     VForm,
     VCardActions,
     VTextarea,
-    VDialog} from 'vuetify/components'
+    VDialog,
+    VDivider,
+    VListItemTitle,
+    VDataTable,
+    VListItem,
+    VList,
+    VListItemSubtitle} from 'vuetify/components'
 
 // Создаем экземпляр Vuetify
 const vuetify = createVuetify({
@@ -54,6 +61,13 @@ const vuetify = createVuetify({
         VCardActions,
         VTextarea,
         VDialog,
+        VDivider,
+        VListItemTitle,
+        VDataTable,
+        VListItem,
+        VListItemSubtitle,
+        VList,
+
     }
 })
 
@@ -61,5 +75,6 @@ const app = createApp(App)
 
 app.use(router)
 app.use(vuetify)
+app.use(store);
 
 app.mount('#app')
