@@ -14,7 +14,7 @@ export default createStore({
                 required: 1,
                 experienced: 1,
                 volunteers: [
-                  { id: 1, name: "Иван Иванов", phone: "123456", notes: "" },
+                  { id: 1, name: "Иван Иванов", experience: true, phone: "123456", telegram:"", notes: "" },
                 ],
               }, 
               {
@@ -28,7 +28,7 @@ export default createStore({
                 required: 1,
                 experienced: 1,
                 volunteers: [
-                  { id:2, name: "Царева Екатерина", phone: "+7900000000", notes: "" }
+                  { id:2, name: "Царева Екатерина", experience: true, phone: "+7900000000", notes: "" }
                 ],
               }
             ]
@@ -41,7 +41,7 @@ export default createStore({
                 required: 1,
                 experienced: 1,
                 volunteers: [
-                  { id: 1, name: "Иван Иванов", phone: "123456", notes: "" },
+                  { id: 1, name: "Иван Иванов", experience: true, phone: "123456", notes: "" },
                 ],
               }, 
               {
@@ -55,7 +55,7 @@ export default createStore({
                 required: 1,
                 experienced: 1,
                 volunteers: [
-                  { id:2, name: "Царева Екатерина", phone: "+7900000000", notes: "" }
+                  { id:2, name: "Царева Екатерина", experience: true, phone: "+7900000000", notes: "" }
                 ],
               }
             ],
@@ -68,7 +68,7 @@ export default createStore({
                 required: 1,
                 experienced: 1,
                 volunteers: [
-                  { id: 1, name: "Иван Иванов", phone: "123456", notes: "" },
+                  { id: 1, name: "Иван Иванов", experience: true, phone: "123456", notes: "" },
                 ],
               }, 
               {
@@ -82,7 +82,7 @@ export default createStore({
                 required: 1,
                 experienced: 1,
                 volunteers: [
-                  { id:2, name: "Царева Екатерина", phone: "+7900000000", notes: "" }
+                  { id:2, name: "Царева Екатерина", experience: true, phone: "+7900000000", notes: "" }
                 ],
               }
             ]
@@ -97,7 +97,7 @@ export default createStore({
             shifts: [
               {
                 time: "00:00-08:00",
-                required: 1,
+                required: 3,
                 experienced: 1,
                 volunteers: [
                   { id: 1, name: "Анна Петрова", phone: "789101", experience: true },
@@ -105,7 +105,7 @@ export default createStore({
               },
               {
                 time: "08:00-16:00",
-                required: 1,
+                required: 3,
                 experienced: 1,
                 volunteers: [
                   { id: 1, name: "Анна Петрова", phone: "789101", experience: true },
@@ -113,7 +113,7 @@ export default createStore({
               },
               {
                 time: "16:00-00:00",
-                required: 1,
+                required: 5,
                 experienced: 1,
                 volunteers: [
                 ],
@@ -151,7 +151,7 @@ export default createStore({
                 volunteers: [
                   { id: 1, name: "Анна Петрова", phone: "789101", experience: true },
                   { id: 1, name: "Анна Петрова", phone: "789101", experience: true },
-                  { id: 1, name: "Анна Петрова", phone: "789101", experience: true },
+                  { id: 1, name: "Анна Петрова", phone: "789101", experience: false },
                   { id: 1, name: "Анна Петрова", phone: "789101", experience: false },
                 ],
               },
@@ -180,10 +180,49 @@ export default createStore({
     getSections(state) {
       return state.sections;
     },
-    getShiftBySection: (state) => (sectionName, shiftTime) => {
+    getRoleBySection: (state) => (sectionName, roleName) => {
       const section = state.sections.find((s) => s.name === sectionName);
-      return section?.shifts.find((shift) => shift.time === shiftTime) || null;
+      return section?.roles.find((role) => role.role === roleName) || null;
     },
+    getVolunteersListBySectionShift: (state) => (sectionName, roleName, shiftTime) => {
+      const section = state.sections.find((s) => s.name === sectionName);
+      const role = section?.roles.find((role) => role.role === roleName) || null;
+      const shift = role?.shifts.find((shift) => shift.time === shiftTime) || null; 
+      const volunteers = shift?.volunteers || null;
+      const required = shift?.required || 0;
+      const experiencedCnt = shift?.experienced || 0
+
+      const experienced = volunteers?.filter(person => person.experience) || [];   // уточняем, сколько есть опытных среди волонтеров
+      const inexperienced = volunteers?.filter(person => !person.experience) || [];
+
+      // формируем список вансий для смены
+      const result = []
+      for (let i = 0; i < experiencedCnt; i++) {
+        const elem = {
+          id: i+1,
+          volunteer: {},
+          experience: true, 
+        }
+        if (i < experienced.length) {
+          elem.volunteer = experienced[i]
+        } 
+        result.push(elem);
+      }
+      
+      // Формируем оставшиеся 5 элементов из списка inexperienced
+      for (let i = experiencedCnt; i < required; i++) {
+        const elem = {
+          id: i+1,
+          volunteer: {},
+          experience: false, 
+        }
+        if (i < inexperienced.length) {
+          elem.volunteer = inexperienced[i] 
+        } 
+        result.push(elem);
+      }
+      return result
+    }
   },
   mutations: {
     addVolunteer(state, { sectionName, shiftTime, role, volunteer }) {
