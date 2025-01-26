@@ -5,7 +5,7 @@
     <v-card-text>
       <v-row>
         <v-col v-for="shift in role.shifts" :key="shift.time" >
-          <ShiftCard :shift="shift" :sectionName="sectionName" :shiftTime="shift.time" />
+          <ShiftCard :shift="shift" :sectionName="sectionName" :role="role.role" />
         </v-col>
       </v-row>
     </v-card-text>
