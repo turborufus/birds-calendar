@@ -175,6 +175,23 @@ export default createStore({
         ],
       },
     ],
+    volunteers: [
+      { id: 1, name: "Анна Петрова", experience: true, phone: "+79991234567", telegram: "@anna_petrova", note: "" },
+      { id: 2, name: "Иван Иванов", experience: false, phone: "", telegram: "", note: "Может участвовать только по выходным" },
+      { id: 3, name: "Мария Сидорова", experience: true, phone: "+79998765432", telegram: "@maria_sidorova", note: "" },
+      { id: 4, name: "Олег Смирнов", experience: false, phone: "+79991239876", telegram: "@oleg_smirnov", note: "" },
+      { id: 5, name: "Елена Воробьева", experience: true, phone: "", telegram: "", note: "Имеет опыт работы с детьми" },
+      { id: 6, name: "Николай Карпов", experience: false, phone: "", telegram: "@nik_karpov", note: "" },
+      { id: 7, name: "Светлана Орлова", experience: true, phone: "+79995556677", telegram: "", note: "" },
+      { id: 8, name: "Дмитрий Зайцев", experience: false, phone: "+79990001122", telegram: "@dima_zaitsev", note: "Доступен только вечером" },
+      { id: 9, name: "Екатерина Лебедева", experience: true, phone: "", telegram: "@katya_lebeda", note: "" },
+      { id: 10, name: "Алексей Морозов", experience: false, phone: "+79992223344", telegram: "", note: "" },
+      { id: 11, name: "Ольга Павлова", experience: true, phone: "+79998887766", telegram: "@olga_pavlova", note: "Работала на крупных мероприятиях" },
+      { id: 12, name: "Михаил Круглов", experience: false, phone: "", telegram: "@mikhail_kruglov", note: "" },
+      { id: 13, name: "Татьяна Попова", experience: true, phone: "+79991112233", telegram: "", note: "" },
+      { id: 14, name: "Андрей Фёдоров", experience: false, phone: "+79997775544", telegram: "@andrey_fedorov", note: "" },
+      { id: 15, name: "Юлия Кузнецова", experience: true, phone: "", telegram: "", note: "Готова работать удаленно" },
+    ]
   },
   getters: {
     getSections(state) {
