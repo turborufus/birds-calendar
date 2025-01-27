@@ -1,10 +1,25 @@
 import { createStore } from 'vuex';
 
 export default createStore({
+  namespaced: true,
   state: {
+    isLoggedIn: false, // Для логина
+    headquarters: [
+      {
+        id: 1,
+        name: "Штаб 1",
+        location: "Анапа",
+      },
+      {
+        id: 2,
+        name: "Штаб 2",
+        location: "Анапа",
+      },
+    ],
     sections: [
       {
         name: "ШТАБ",
+        headquarter: 1,
         roles: [
           {
             role: "Координатор штаба",
@@ -91,6 +106,7 @@ export default createStore({
       },
       {
         name: "ПТИЦЫ",
+        headquarter: 1,  // в какому штабу относится секция
         roles: [
           {
             role: "Регистрация птиц",
@@ -197,6 +213,7 @@ export default createStore({
     getSections(state) {
       return state.sections;
     },
+    getHeadquarters: (state) => state.headquarters,
     getRoleBySection: (state) => (sectionName, roleName) => {
       const section = state.sections.find((s) => s.name === sectionName);
       return section?.roles.find((role) => role.role === roleName) || null;
@@ -239,10 +256,12 @@ export default createStore({
         result.push(elem);
       }
       return result
-    }
+    },
+    getVolunteers: (state) => state.volunteers,
+    isAuthenticated: (state) => state.isLoggedIn,
   },
   mutations: {
-    addVolunteer(state, { sectionName, shiftTime, role, volunteer }) {
+    addVolunteerToShift(state, { sectionName, shiftTime, role, volunteer }) {
       const section = state.sections.find((s) => s.name === sectionName);
       if (!section) return;
 
@@ -254,7 +273,7 @@ export default createStore({
 
       roleData.volunteers.push(volunteer);
     },
-    removeVolunteer(state, { sectionName, shiftTime, role, volunteerId }) {
+    removeVolunteerFromShift(state, { sectionName, shiftTime, role, volunteerId }) {
       const section = state.sections.find((s) => s.name === sectionName);
       if (!section) return;
 
@@ -266,6 +285,12 @@ export default createStore({
 
       roleData.volunteers = roleData.volunteers.filter((v) => v.id !== volunteerId);
     },
+    login(state) {
+      state.isLoggedIn = true;
+    },
+    logout(state) {
+      state.isLoggedIn = false;
+    },
   },
   actions: {
     async fetchSections({ commit }) {
@@ -276,6 +301,12 @@ export default createStore({
     },
     setSections(state, sections) {
       state.sections = sections;
+    },
+    login({ commit }) {
+      commit("login");
+    },
+    logout({ commit }) {
+      commit("logout");
     },
   },
 });
