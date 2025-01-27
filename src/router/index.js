@@ -19,7 +19,7 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/headquarters/:id/shifts',
+    path: '/headquarters/:id',
     name: 'ShiftsListPage',
     component: ShiftsListPage,
     props: true,

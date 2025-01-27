@@ -12,12 +12,12 @@ export default createStore({
     headquarters: [
       {
         id: 1,
-        name: "Штаб 1",
+        name: "Жемчужная, 9",
         location: "Анапа",
       },
       {
         id: 2,
-        name: "Штаб 2",
+        name: "Мира, 113",
         location: "Анапа",
       },
     ],
@@ -215,14 +215,23 @@ export default createStore({
     ]
   },
   getters: {
+    getHeadquarters(state) {
+      return state.headquarters
+    },
     getSections(state) {
       return state.sections;
     },
-    getSectionsByHeadquater(state, hqId) {
-      const sections = state.sections.filter((s) => s.id === hqId)
-      return sections
+    getSectionsByHeadquarter: (state) => (hqId) => {
+      console.log("getSectionsByHeadquarter")
+      console.log(state.sections)
+      console.log(hqId)
+      const sections = state.sections.filter((s) => s.headquarter === hqId)
+      console.log(sections)
+      return sections 
     },
-    getHeadquarters: (state) => state.headquarters,
+    getHeadquarterById: (state) => (hqId) => {
+      return state.headquarters.find((hq) => hq.id === hqId)
+    },
     getRoleBySection: (state) => (sectionName, roleName) => {
       const section = state.sections.find((s) => s.name === sectionName);
       return section?.roles.find((role) => role.role === roleName) || null;
