@@ -1,9 +1,14 @@
 import { createStore } from 'vuex';
+import { login } from '../services/auth'
 
 export default createStore({
   namespaced: true,
   state: {
-    isLoggedIn: false, // Для логина
+    isLoggedIn: false, // Для логина МОК
+    // Для логина через API    
+    token: null,
+    user: null,
+    // мок для штабов и прочего
     headquarters: [
       {
         id: 1,
@@ -213,6 +218,10 @@ export default createStore({
     getSections(state) {
       return state.sections;
     },
+    getSectionsByHeadquater(state, hqId) {
+      const sections = state.sections.filter((s) => s.id === hqId)
+      return sections
+    },
     getHeadquarters: (state) => state.headquarters,
     getRoleBySection: (state) => (sectionName, roleName) => {
       const section = state.sections.find((s) => s.name === sectionName);
@@ -258,20 +267,34 @@ export default createStore({
       return result
     },
     getVolunteers: (state) => state.volunteers,
-    isAuthenticated: (state) => state.isLoggedIn,
+    // isAuthenticated: (state) => !!state.token,
+    isAuthenticated: (state) => state.isLoggedIn, // замоканные данные
   },
   mutations: {
-    addVolunteerToShift(state, { sectionName, shiftTime, role, volunteer }) {
+    editShift(state, {sectionName, roleName, shiftTime, required, experienced}) {
       const section = state.sections.find((s) => s.name === sectionName);
       if (!section) return;
 
-      const shift = section.shifts.find((s) => s.time === shiftTime);
-      if (!shift) return;
+      const role = section.roles.find((r) => r.role === roleName);
+      if (!role) return;
 
-      const roleData = shift.roles.find((r) => r.role === role);
-      if (!roleData) return;
+      const shiftData = role.shifts.find((s) => s.time === shiftTime);
+      if (!shiftData) return;
 
-      roleData.volunteers.push(volunteer);
+      if (shiftData.required !== required) {shiftData.required = required} 
+      if (shiftData.experienced !== experienced) {shiftData.experienced = experienced}
+    },
+    addVolunteerToShift(state, { sectionName, roleName, shiftTime, volunteer }) {
+      const section = state.sections.find((s) => s.name === sectionName);
+      if (!section) return;
+
+      const role = section.roles.find((r) => r.role === roleName);
+      if (!role) return;
+
+      const shiftData = role.shifts.find((s) => s.time === shiftTime);
+      if (!shiftData) return;
+
+      shiftData.volunteers.push(volunteer);
     },
     removeVolunteerFromShift(state, { sectionName, shiftTime, role, volunteerId }) {
       const section = state.sections.find((s) => s.name === sectionName);
@@ -285,6 +308,20 @@ export default createStore({
 
       roleData.volunteers = roleData.volunteers.filter((v) => v.id !== volunteerId);
     },
+    // для авторизации через API
+    // setToken(state, token) {
+    //   state.token = token;
+    //   localStorage.setItem('token', token)
+    // },
+    // setUser(state, user) {
+    //   state.user = user;
+    // },
+    // logout(state) {
+    //   state.token = null;
+    //   state.user = null;
+    // },
+
+    // замоканные данные
     login(state) {
       state.isLoggedIn = true;
     },
@@ -302,11 +339,14 @@ export default createStore({
     setSections(state, sections) {
       state.sections = sections;
     },
-    login({ commit }) {
-      commit("login");
+    async login({ commit }, credentials) {
+      const data = await login(credentials);
+      commit('setToken', data.token); // Сохраняем токен
+      commit('setUser', data.user);   // Сохраняем данные пользователя (если есть)
     },
     logout({ commit }) {
-      commit("logout");
+      commit('logout');
+      localStorage.removeItem('token'); // Удаляем из localStorage
     },
   },
 });

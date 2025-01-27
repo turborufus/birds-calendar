@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store';
+import store from './store/shifts';
 import { createVuetify } from 'vuetify'
 import 'vuetify/styles'  // Добавляем глобальные стили Vuetify
 //import { VApp, VBtn, VToolbar, VToolbarTitle, VTextField, VCard, VAppBar } from 'vuetify/components'  // Явный импорт компонентов Vuetify
@@ -33,7 +33,9 @@ import { VApp,
     VDataTable,
     VListItem,
     VList,
-    VListItemSubtitle} from 'vuetify/components'
+    VListItemSubtitle,
+    VNavigationDrawer,
+    VAlert} from 'vuetify/components'
 
 // Создаем экземпляр Vuetify
 const vuetify = createVuetify({
@@ -67,7 +69,8 @@ const vuetify = createVuetify({
         VListItem,
         VListItemSubtitle,
         VList,
-
+        VNavigationDrawer,
+        VAlert,
     }
 })
 
