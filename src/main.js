@@ -35,7 +35,10 @@ import { VApp,
     VList,
     VListItemSubtitle,
     VNavigationDrawer,
-    VAlert} from 'vuetify/components'
+    VAlert,
+    VBottomNavigation,
+    VIcon,
+    VLayout} from 'vuetify/components'
 
 // Создаем экземпляр Vuetify
 const vuetify = createVuetify({
@@ -71,6 +74,9 @@ const vuetify = createVuetify({
         VList,
         VNavigationDrawer,
         VAlert,
+        VBottomNavigation,
+        VIcon,
+        VLayout
     }
 })
 

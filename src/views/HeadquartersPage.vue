@@ -1,17 +1,29 @@
 <template>
 <v-container>
-  <v-app-bar color="primary" app>
-    <v-toolbar-title>Календарь смен. Анапа</v-toolbar-title>
-    <v-spacer />
+  <v-app-bar flat color="primary" app>
+    <v-toolbar-title  cols="auto">Календарь смен. Анапа</v-toolbar-title>
+    <!-- <v-spacer /> -->
     <v-btn color="secondary" @click="logout">Выйти</v-btn>
   </v-app-bar>
 
-  <v-navigation-drawer app>
-    <v-list>
-      <v-list-item @click="goTo('headquarters')">Список штабов</v-list-item>
-      <v-list-item @click="goTo('volunteers')">Список волонтеров</v-list-item>
-    </v-list>
-  </v-navigation-drawer>
+  <v-app-bar flat color="primary">
+    <v-container>
+      <v-row>
+        <v-col 
+          v-for="link in links"
+          :key="link.text"
+        >
+          <v-btn
+            @click="goTo(link.to)"
+            text
+            color="white"
+          >
+            {{ link.text }}
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>      
+  </v-app-bar>
 
   <v-main>
     <v-container>
@@ -41,6 +53,14 @@ import { mapState } from 'vuex';
 
 export default {
   name: "HeadquartersPage",
+  data() {
+    return {
+      links: [
+        { text: 'Список штабов', to: 'headquarters' },
+        { text: 'Список волонтеров', to: 'volunteers' },
+      ],
+    };
+  },
   computed: {
     ...mapState['shifts'], 
     headquarters() {
