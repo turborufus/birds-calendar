@@ -7,7 +7,7 @@
           v-for="section in sections"
           :key="section.name"
           justify="center" 
-          dense
+          no-gutters
       >
         <v-col>
           <calendar-section :section="section" />

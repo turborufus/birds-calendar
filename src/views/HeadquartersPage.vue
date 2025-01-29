@@ -4,7 +4,7 @@
 
   <v-main>
     <v-container>
-      <v-row >
+      <v-row justify="center" >
         <v-col
           v-for="hq in headquarters"
           :key="hq.id"
