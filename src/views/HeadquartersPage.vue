@@ -1,33 +1,10 @@
 <template>
 <v-container>
-  <v-app-bar flat color="primary" app>
-    <v-toolbar-title  cols="auto">Календарь смен. Анапа</v-toolbar-title>
-    <!-- <v-spacer /> -->
-    <v-btn color="secondary" @click="logout">Выйти</v-btn>
-  </v-app-bar>
-
-  <v-app-bar flat color="primary">
-    <v-container>
-      <v-row>
-        <v-col 
-          v-for="link in links"
-          :key="link.text"
-        >
-          <v-btn
-            @click="goTo(link.to)"
-            text
-            color="white"
-          >
-            {{ link.text }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>      
-  </v-app-bar>
+  <header-component></header-component>
 
   <v-main>
     <v-container>
-      <v-row>
+      <v-row >
         <v-col
           v-for="hq in headquarters"
           :key="hq.id"
@@ -50,9 +27,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import HeaderComponent from '../components/HeaderComponent.vue'
 
 export default {
   name: "HeadquartersPage",
+  components: {
+    HeaderComponent,
+  },
   data() {
     return {
       links: [
@@ -70,14 +51,6 @@ export default {
   methods: {
     openShifts(hqId) {
       this.$router.push(`/headquarters/${hqId}`);
-    },
-    goTo(page) {
-      this.$router.push(`/${page}`);
-    },
-    logout() {
-      localStorage.removeItem("isLoggedIn");
-      this.$store.dispatch("shifts/logout");
-      this.$router.push("/login");
     },
   },
 };

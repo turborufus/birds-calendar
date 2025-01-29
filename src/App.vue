@@ -1,11 +1,5 @@
 <template>
   <v-app>
-    <!-- <v-app-bar app>
-      <v-app-bar-title>Календарь смен штаба птиц
-      </v-app-bar-title>  
-    </v-app-bar> -->
-  
-     <!-- Отображение компонентов страниц -->
     <router-view />
   </v-app>
 </template>

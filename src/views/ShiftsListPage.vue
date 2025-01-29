@@ -1,22 +1,6 @@
 <template>
   <v-container>
-    <v-app-bar flat color="primary" app>
-      <v-toolbar-title>Календарь смен. {{ currentHeadquarter.name }}</v-toolbar-title>
-      <v-spacer />
-      <v-btn color="secondary" @click="logout">Выйти</v-btn>
-    </v-app-bar>
-
-    <v-app-bar flat color="primary">
-      <v-btn
-        v-for="link in links"
-        :key="link.text"
-        @click="goTo(link.to)"
-        text
-        color="white"
-      >
-        {{ link.text }}
-      </v-btn>
-    </v-app-bar>
+    <header-component :title="pageTitle"></header-component>
 
     <v-main>
       <v-row 
@@ -36,11 +20,13 @@
 <script>
 import { mapState } from 'vuex';
 import CalendarSection from "../components/CalendarSection.vue";
+import HeaderComponent from "../components/HeaderComponent.vue"
 
 export default {
   props: ["id"],
   components: {
     CalendarSection,
+    HeaderComponent,
   },
   data() {
     return {
@@ -59,12 +45,12 @@ export default {
     },
     currentHeadquarter() {
       return this.$store.getters["getHeadquarterById"](Number(this.id))
+    },
+    pageTitle() {
+      return "Календарь смен: "+ this.currentHeadquarter.name
     }
   },
   methods: {
-    goTo(page) {
-      this.$router.push(`/${page}`);
-    },
   }
 };
 </script>
